@@ -6,8 +6,8 @@ uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
 
-bool isBetween (vec2 pointA, vec2 pointB, vec2 pointC, float x) {
-  return (x - pointA.x) * (x - pointB.x) * (x - pointC.x) <= 0.;
+bool isBetween (vec2[3] points, float x) {
+  return (x - points[0].x) * (x - points[1].x) * (x - points[2].x) <= 0.;
 }
 vec3 getPointBetweenPointsByX (vec2 pointA, vec2 pointB, float x) {
   bool outOfRange = (x - pointA.x) * (x - pointB.x) > 0.;
@@ -40,14 +40,8 @@ bool isPointInTriangle (vec2[3] vertices, vec2 point) {
   }
   bool enoughPoints = horizontalPointsXCount == 2 &&
                       verticalPointsYCount == 2;
-  bool inRange = isBetween(horizontalPointsX[0],
-                           horizontalPointsX[1],
-                           horizontalPointsX[2],
-                           point.x) &&
-                 isBetween(verticalPointsY[0],
-                           verticalPointsY[1],
-                           verticalPointsY[2],
-                           point.y);
+  bool inRange = isBetween(horizontalPointsX, point.x) &&
+                 isBetween(verticalPointsY, point.y);
   return enoughPoints && inRange;
 }
 
@@ -60,5 +54,5 @@ void main () {
   vertices[2] = vec2(.7, .4);
   vec2 st = gl_FragCoord.xy / u_resolution;
   float pct = isPointInTriangle(vertices, st) ? 1. : 0.;
-  gl_FragColor = pct * color + (1. - pct) * colorBg;
+  gl_FragColor = mix(colorBg, color, pct);
 }
