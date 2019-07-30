@@ -26,20 +26,20 @@ vec3 getPointBetweenPointsByY (vec2 pointA, vec2 pointB, float y) {
 bool isPointInTriangle (vec2[3] vertices, vec2 point) {
   vec2 horizontalPointsX[3];
   vec2 verticalPointsY[3];
-  int horizontalPointsXNumber = 0;
-  int verticalPointsYNumber = 0;
+  int horizontalPointsXCount = 0;
+  int verticalPointsYCount = 0;
   for (int i = 0; i < 3; i++) {
     vec2 thisVertex = vertices[i];
     vec2 nextVertex = i == 2 ? vertices[0] : vertices[i + 1];
     vec3 horizontalPoint = getPointBetweenPointsByY(thisVertex, nextVertex, point.y);
     horizontalPointsX[i] = horizontalPoint.xz;
-    horizontalPointsXNumber += 1 * int(horizontalPoint.z);
+    horizontalPointsXCount += 1 * int(horizontalPoint.z);
     vec3 verticalPoint = getPointBetweenPointsByX(thisVertex, nextVertex, point.x);
     verticalPointsY[i] = verticalPoint.yz;
-    verticalPointsYNumber += 1 * int(verticalPoint.z);
+    verticalPointsYCount += 1 * int(verticalPoint.z);
   }
-  bool enoughPoints = horizontalPointsXNumber == 2 &&
-                      verticalPointsYNumber == 2;
+  bool enoughPoints = horizontalPointsXCount == 2 &&
+                      verticalPointsYCount == 2;
   bool inRange = isBetween(horizontalPointsX[0],
                            horizontalPointsX[1],
                            horizontalPointsX[2],
@@ -55,9 +55,9 @@ void main () {
   vec4 color = vec4(vec3(.5), 1.);
   vec4 colorBg = vec4(vec3(.95), 1.);
   vec2 vertices[3];
-  vertices[0] = vec2(0.1, 0.2);
-  vertices[1] = vec2(0.3, 0.6);
-  vertices[2] = vec2(0.7, 0.4);
+  vertices[0] = vec2(.1, .2);
+  vertices[1] = vec2(.3, .6);
+  vertices[2] = vec2(.7, .4);
   vec2 st = gl_FragCoord.xy / u_resolution;
   float pct = isPointInTriangle(vertices, st) ? 1. : 0.;
   gl_FragColor = pct * color + (1. - pct) * colorBg;
