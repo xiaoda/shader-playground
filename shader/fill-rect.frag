@@ -6,9 +6,6 @@ uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
 
-bool isBetween (vec2 pointA, vec2 pointB, vec2 pointC, vec2 pointD, float x) {
-  return (x - pointA.x) * (x - pointB.x) * (x - pointC.x) * (x - pointD.x) <= 0.;
-}
 bool isBetweenByOdd (vec2[4] points, float x) {
   int smallerCount = 0;
   int biggerCount = 0;
@@ -57,10 +54,10 @@ void main () {
   vec4 color = vec4(vec3(.5), 1.);
   vec4 colorBg = vec4(vec3(.95), 1.);
   vec2 vertices[4];
-  vertices[0] = vec2(.1, .2);
-  vertices[1] = vec2(.2, .9);
-  vertices[2] = vec2(.9, .8);
-  vertices[3] = vec2(.8, .1);
+  vertices[0] = vec2(.1, .5);
+  vertices[1] = vec2(.5, .2);
+  vertices[2] = vec2(.9, .5);
+  vertices[3] = vec2(.5, .4);
   vec2 st = gl_FragCoord.xy / u_resolution;
   float pct = isPointInRect(vertices, st) ? 1. : 0.;
   gl_FragColor = mix(colorBg, color, pct);
