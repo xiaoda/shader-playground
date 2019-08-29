@@ -26,9 +26,6 @@ void main () {
   vec2 center = vec2(.5, .5);
   float radius = .2;
   vec2 st = gl_FragCoord.xy / u_resolution;
-  float pct =
-    isPointInCircle(center, radius, st) ?
-    1. :
-    1. - min(getPointDistanceFromCircle(center, radius, st) * 300., 1.);
+  float pct = 1. - min(getPointDistanceFromCircle(center, radius, st) * 300., 1.);
   gl_FragColor = mix(colorBg, color, pct);
 }
