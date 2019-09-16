@@ -6,17 +6,13 @@ uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
 
-float getDistanceBetweenPoints (vec2 pointA, vec2 pointB) {
-  return sqrt(pow(pointA.x - pointB.x, 2.) + pow(pointA.y - pointB.y, 2.));
-}
-
 bool isPointInCircle (vec2 center, float radius, vec2 point) {
-  float distance = getDistanceBetweenPoints(center, point);
+  float distance = distance(center, point);
   return distance <= radius;
 }
 
 float getPointDistanceFromCircle (vec2 center, float radius, vec2 point) {
-  float distance = getDistanceBetweenPoints(center, point);
+  float distance = distance(center, point);
   return abs(distance - radius);
 }
 

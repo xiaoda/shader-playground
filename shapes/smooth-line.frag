@@ -14,10 +14,6 @@ float formatAngle (float angle) {
   return abs(angle) > 180. ? angle + 360. * (angle / abs(angle)) * -1. : angle;
 }
 
-float getDistanceBetweenPoints (vec2 pointA, vec2 pointB) {
-  return sqrt(pow(pointA.x - pointB.x, 2.) + pow(pointA.y - pointB.y, 2.));
-}
-
 vec3 checkYPositive (vec2 vector) {
   bool isPositive = vector.y >= 0.;
   float reversed = isPositive ? 0. : 1.;
@@ -34,7 +30,7 @@ float getAngle (vec2 vertex, vec2 pointA, vec2 pointB) {
 }
 
 vec2 transformPointByAngle (vec2 point, float angle) {
-  float distance = getDistanceBetweenPoints(point, vec2(0., 0.));
+  float distance = distance(point, vec2(0., 0.));
   float pointAngle = getAngle(vec2(0., 0.), vec2(1., 0.), point);
   float distAngle = formatAngle(pointAngle + angle);
   vec2 distPoint;
@@ -53,7 +49,7 @@ float getPointDistanceFromLine (vec2[2] vertices, vec2 point) {
   vec2 translatedNextVertex = nextVertex - thisVertex;
   vec2 translatedPoint = point - thisVertex;
   vec2 transformedNextVertex = vec2(
-    getDistanceBetweenPoints(translatedNextVertex, vec2(0, 0)), 0
+    distance(translatedNextVertex, vec2(0, 0)), 0
   );
   float angle = getAngle(vec2(0., 0.), translatedNextVertex, transformedNextVertex);
   vec2 trasformedPoint = transformPointByAngle(translatedPoint, angle);
@@ -61,8 +57,8 @@ float getPointDistanceFromLine (vec2[2] vertices, vec2 point) {
     isBetween(0., transformedNextVertex.x, trasformedPoint.x) ?
     abs(trasformedPoint.y) :
     min(
-      getDistanceBetweenPoints(trasformedPoint, vec2(0., 0.)),
-      getDistanceBetweenPoints(trasformedPoint, transformedNextVertex)
+      distance(trasformedPoint, vec2(0., 0.)),
+      distance(trasformedPoint, transformedNextVertex)
     );
   return distance;
 }

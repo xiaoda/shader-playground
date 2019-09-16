@@ -33,5 +33,5 @@ void main () {
   float y = st.x;
   float pct = min(plot(st, y) + plot(st, y * -1. + 1.), 1.);
 
-  gl_FragColor = color * pct + colorBg * (1. - pct);
+  gl_FragColor = mix(colorBg, color, pct);
 }
