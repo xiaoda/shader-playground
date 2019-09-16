@@ -15,11 +15,10 @@ float plot(vec2 st, float y){
     pct +=
       //*/
       st.y < density ||
-      (st.y > density * 3. && st.y < density * 5.) ||
+      // (st.y > density * 3. && st.y < density * 5.) ||
       st.y > density * 7.
       ? 0. :
-      /*/
-      //*/
+      /*/ //*/
       smoothstep( currentY - .01, currentY, st.y) -
       smoothstep( currentY, currentY + .01, st.y);
   }
